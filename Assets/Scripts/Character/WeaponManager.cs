@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private GameObject canonPos;
     [SerializeField] private GameObject shellEjectionPos;
+    [SerializeField] private TextMeshProUGUI magazineUI;
 
     // settings
     [SerializeField] private int magazineSize = 30;
@@ -15,10 +17,18 @@ public class WeaponManager : MonoBehaviour
     // variables
     [HideInInspector] public bool isShootInput = false;
     private bool canShoot = true;
+    private bool canReload = true;
+    private int currentMagazine;
+
+    private void Start()
+    {
+        currentMagazine = magazineSize;
+        UpdateUI();
+    }
 
     public void Update()
     {
-        if(canShoot && isShootInput)
+        if (currentMagazine > 0 && canShoot && isShootInput)
             StartCoroutine(FireAction());
     }
 
@@ -26,9 +36,26 @@ public class WeaponManager : MonoBehaviour
     {
         var bullet = Pooler.instance.Spawn("Bullet", canonPos.transform.position, canonPos.transform.rotation);
         var shell = Pooler.instance.Spawn("Shell", shellEjectionPos.transform.position, shellEjectionPos.transform.rotation);
-        
+
         bullet.GetComponent<PropController>().Event();
         shell.GetComponent<PropController>().Event();
+
+        currentMagazine--;
+        UpdateUI();
+    }
+    public void Reload()
+    {
+        if (!canReload)
+            return;
+
+        canReload = false;
+        currentMagazine = 0;
+        UpdateUI();
+        
+        var mag = Pooler.instance.Spawn("Mag", shellEjectionPos.transform.position, shellEjectionPos.transform.rotation);
+        mag.GetComponent<PropController>().Event();
+
+        StartCoroutine(ReloadAction());
     }
 
     private IEnumerator FireAction()
@@ -39,5 +66,22 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(fireCoolDown);
 
         canShoot = true;
+    }
+    private IEnumerator ReloadAction()
+    {
+        yield return new WaitForSeconds(reloadCoolDown);
+        currentMagazine = magazineSize;
+        UpdateUI();
+        canReload = true;
+    }
+
+    private void UpdateUI()
+    {
+        magazineUI.text = $"{currentMagazine}/{magazineSize}";
+
+        if (currentMagazine == 0)
+            magazineUI.color = Color.red;
+        else
+            magazineUI.color = Color.white;
     }
 }

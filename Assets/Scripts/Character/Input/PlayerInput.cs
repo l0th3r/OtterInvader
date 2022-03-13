@@ -49,6 +49,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""129d446b-1bb6-454d-a089-d84a81d1b517"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -161,6 +169,28 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a200bdcd-f967-4125-b40b-cc0ce3fb92e5"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7aa800c4-2d61-47b3-a671-56e9dac8554a"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -173,6 +203,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_MainMap_Aim = m_MainMap.FindAction("Aim", throwIfNotFound: true);
         m_MainMap_AimMouse = m_MainMap.FindAction("AimMouse", throwIfNotFound: true);
         m_MainMap_Fire = m_MainMap.FindAction("Fire", throwIfNotFound: true);
+        m_MainMap_Reload = m_MainMap.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -226,6 +257,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_MainMap_Aim;
     private readonly InputAction m_MainMap_AimMouse;
     private readonly InputAction m_MainMap_Fire;
+    private readonly InputAction m_MainMap_Reload;
     public struct MainMapActions
     {
         private @PlayerInput m_Wrapper;
@@ -234,6 +266,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Aim => m_Wrapper.m_MainMap_Aim;
         public InputAction @AimMouse => m_Wrapper.m_MainMap_AimMouse;
         public InputAction @Fire => m_Wrapper.m_MainMap_Fire;
+        public InputAction @Reload => m_Wrapper.m_MainMap_Reload;
         public InputActionMap Get() { return m_Wrapper.m_MainMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -255,6 +288,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Fire.started -= m_Wrapper.m_MainMapActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_MainMapActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_MainMapActionsCallbackInterface.OnFire;
+                @Reload.started -= m_Wrapper.m_MainMapActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_MainMapActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_MainMapActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_MainMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -271,6 +307,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -281,5 +320,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnAimMouse(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

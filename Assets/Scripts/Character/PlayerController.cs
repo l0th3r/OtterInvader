@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
         // Fire
         playerInput.MainMap.Fire.started += OnFire;
         playerInput.MainMap.Fire.canceled += OnFire;
+
+        // Reload
+        playerInput.MainMap.Reload.started += OnReload;
     }
 
     private void FixedUpdate()
@@ -69,6 +72,10 @@ public class PlayerController : MonoBehaviour
     private void OnFire(InputAction.CallbackContext ctx)
     {
         weapon.isShootInput = ctx.ReadValueAsButton();
+    }
+    private void OnReload(InputAction.CallbackContext ctx)
+    {
+        weapon.Reload();
     }
 
     private void OnEnable()
