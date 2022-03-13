@@ -8,6 +8,6 @@ public class RoomManager : MonoBehaviour
 
     public void Load()
     {
-        Debug.Log("Hi");
+        Pooler.instance.InitPools();
     }
 }

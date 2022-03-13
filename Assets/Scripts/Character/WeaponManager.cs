@@ -28,8 +28,9 @@ public class WeaponManager : MonoBehaviour
 
     private void Fire()
     {
-        Instantiate(bulletPrefab, canonPos.transform.position, canonPos.transform.rotation);
-        Instantiate(shellPrefab, shellEjectionPos.transform.position, shellEjectionPos.transform.rotation);
+        var te = Pooler.instance.Spawn("Bullet", canonPos.transform.position, canonPos.transform.rotation);
+        var shell = Pooler.instance.Spawn("Shell", shellEjectionPos.transform.position, shellEjectionPos.transform.rotation);
+        shell.GetComponent<ShellController>().Eject();
     }
 
     private IEnumerator FireAction()

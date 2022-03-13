@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2905781199854445156}
   - component: {fileID: 7805936567643852702}
   - component: {fileID: 1032546422736892101}
+  - component: {fileID: 7156844118352677488}
   m_Layer: 0
   m_Name: MainManager
   m_TagString: Untagged
@@ -97,6 +98,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6cc3c0f33fdf58e489e294d4c3f54680, type: 2}
   - {fileID: 11400000, guid: e48f9ad43e38aea47a696c3b8e16067a, type: 2}
   secondsBetweenLoadingCheck: 1
+--- !u!114 &7156844118352677488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2905781199854445159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 924142330d33f5740be423b3af63a426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - id: Shell
+    prefab: {fileID: 2700581956936105306, guid: edbe92ef1c001c642a296a6a9c8862c5, type: 3}
+    capacity: 10
+  - id: Bullet
+    prefab: {fileID: 2700581956936105306, guid: 45a6ca15d7637124c94abcd62b957218, type: 3}
+    capacity: 300
 --- !u!1 &3296509061326192197
 GameObject:
   m_ObjectHideFlags: 0

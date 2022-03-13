@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator SetupLevel()
     {
         yield return null;
+        FindObjectOfType<RoomManager>().Load();
         this.State = GameState.waitingInput;
     }
     private void ChangeLevelDone()
