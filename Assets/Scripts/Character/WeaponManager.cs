@@ -7,10 +7,6 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject canonPos;
     [SerializeField] private GameObject shellEjectionPos;
 
-    [SerializeField] private GameObject magazinePrefab;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private GameObject shellPrefab;
-
     // settings
     [SerializeField] private int magazineSize = 30;
     [SerializeField] private float fireCoolDown = 0.25f;

@@ -287,7 +287,7 @@ MonoBehaviour:
   shellEjectionPos: {fileID: 1851093955}
   magazinePrefab: {fileID: 2700581956936105306, guid: 1a8ce415bf914f94e808692fc376ad93, type: 3}
   bulletPrefab: {fileID: 2700581956936105306, guid: 45a6ca15d7637124c94abcd62b957218, type: 3}
-  shellPrefab: {fileID: 2700581956936105306, guid: edbe92ef1c001c642a296a6a9c8862c5, type: 3}
+  shellPrefab: {fileID: 2700581956936105306, guid: 1a8ce415bf914f94e808692fc376ad93, type: 3}
   magazineSize: 30
   fireCoolDown: 0.1
   reloadCoolDown: 3
