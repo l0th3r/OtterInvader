@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     // values
     private Vector2 currentMovement = Vector2.zero;
     private Vector2 aimDirection = Vector2.zero;
+
+    public Action<Vector2> positionChangeEvent;
 
     private void Awake()
     {
@@ -50,6 +52,9 @@ public class PlayerController : MonoBehaviour
             // Rotation
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
             model.transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
+
+            if (positionChangeEvent != null)
+                positionChangeEvent.Invoke(this.transform.position);
         }
     }
 
