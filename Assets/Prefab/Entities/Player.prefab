@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112939486}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.093, y: 0.513, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400725980}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &400725979
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,13 +86,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851093955}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.12572615, w: 0.992065}
   m_LocalPosition: {x: 0.1087, y: 0.2612, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400725980}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -14.445}
 --- !u!1 &2479721054177920137
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,6 +288,9 @@ MonoBehaviour:
   magazinePrefab: {fileID: 2700581956936105306, guid: 1a8ce415bf914f94e808692fc376ad93, type: 3}
   bulletPrefab: {fileID: 2700581956936105306, guid: 45a6ca15d7637124c94abcd62b957218, type: 3}
   shellPrefab: {fileID: 2700581956936105306, guid: edbe92ef1c001c642a296a6a9c8862c5, type: 3}
+  magazineSize: 30
+  fireCoolDown: 0.1
+  reloadCoolDown: 3
   isShootInput: 0
 --- !u!1 &8321060096975019422
 GameObject:

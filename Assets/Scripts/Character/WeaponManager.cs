@@ -12,9 +12,9 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject shellPrefab;
 
     // settings
-    private const int magazineSize = 30;
-    private const float fireCoolDown = 0.5f;
-    private const float reloadCoolDown = 3f;
+    [SerializeField] private int magazineSize = 30;
+    [SerializeField] private float fireCoolDown = 0.25f;
+    [SerializeField] private float reloadCoolDown = 3f;
 
     // variables
     [HideInInspector] public bool isShootInput = false;
@@ -28,9 +28,11 @@ public class WeaponManager : MonoBehaviour
 
     private void Fire()
     {
-        var te = Pooler.instance.Spawn("Bullet", canonPos.transform.position, canonPos.transform.rotation);
+        var bullet = Pooler.instance.Spawn("Bullet", canonPos.transform.position, canonPos.transform.rotation);
         var shell = Pooler.instance.Spawn("Shell", shellEjectionPos.transform.position, shellEjectionPos.transform.rotation);
-        shell.GetComponent<ShellController>().Eject();
+        
+        bullet.GetComponent<PropController>().Event();
+        shell.GetComponent<PropController>().Event();
     }
 
     private IEnumerator FireAction()

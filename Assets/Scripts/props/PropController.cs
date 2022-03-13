@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShellController : MonoBehaviour
+public class PropController : MonoBehaviour
 {
     [SerializeField] private AnimationCurve curve;
     [SerializeField] private float distance = 12f;
     [SerializeField] private float travelTime = 0.7f;
 
-    public void Eject()
+    public void Event()
     {
         StartCoroutine(Drop());
     }

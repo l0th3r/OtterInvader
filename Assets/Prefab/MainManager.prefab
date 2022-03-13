@@ -113,10 +113,10 @@ MonoBehaviour:
   pools:
   - id: Shell
     prefab: {fileID: 2700581956936105306, guid: edbe92ef1c001c642a296a6a9c8862c5, type: 3}
-    capacity: 10
+    capacity: 300
   - id: Bullet
     prefab: {fileID: 2700581956936105306, guid: 45a6ca15d7637124c94abcd62b957218, type: 3}
-    capacity: 300
+    capacity: 30
 --- !u!1 &3296509061326192197
 GameObject:
   m_ObjectHideFlags: 0
