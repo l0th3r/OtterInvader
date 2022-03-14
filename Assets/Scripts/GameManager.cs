@@ -45,7 +45,9 @@ public class GameManager : MonoBehaviour
         uiManager = GetComponentInChildren<UIManager>();
 
         uiManager.Initialize();
-        uiManager.SetGroupActions(GoToMainMenu, ChangeLevel);
+        uiManager.SetGroupActions(GoToMainMenu, ChangeLevel, GoToCredits, GoToAchievements);
+
+        AchievementManager.instance.SetUIManager(uiManager);
 
         if (levelManager.GetActiveScene().name == "_initial")
         {
@@ -88,6 +90,14 @@ public class GameManager : MonoBehaviour
     {
         this.State = GameState.mainMenu;
     }
+    public void GoToCredits()
+    {
+        this.State = GameState.credits;
+    }
+    public void GoToAchievements()
+    {
+        this.State = GameState.achievements;
+    }
     #endregion
 
     #region State
@@ -104,6 +114,13 @@ public class GameManager : MonoBehaviour
             case GameState.waitingInput:
                 SetLevelUI();
                 break;
+            case GameState.credits:
+                uiManager.DisplayGroup(UIGroup.credits);
+                AchievementManager.instance.Unlock("Thank you :)");
+                break;
+            case GameState.achievements:
+                uiManager.DisplayGroup(UIGroup.achievements);
+                break;
         }
     }
 
@@ -113,6 +130,8 @@ public class GameManager : MonoBehaviour
         starting,
         mainMenu,
         waitingInput,
+        credits,
+        achievements
     }
     #endregion
 }

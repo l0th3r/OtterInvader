@@ -11,6 +11,8 @@ public class UIElement : MonoBehaviour
 
     // UI Events
     public Action MainMenuEvent;
+    public Action CreditsEvent;
+    public Action AchievementsEvent;
     public Action<uint> RequestLevelEvent;
 
     public void MoveTo(Transform newParent)
@@ -30,6 +32,18 @@ public class UIElement : MonoBehaviour
         if (RequestLevelEvent != null)
             RequestLevelEvent.Invoke((uint)id);
     }
+
+    public void GoToCredits()
+    {
+        if (CreditsEvent != null)
+            CreditsEvent.Invoke();
+    }
+
+    public void GoToAchievements()
+    {
+        if (AchievementsEvent != null)
+            AchievementsEvent.Invoke();
+    }
 }
 
 [System.Serializable]
@@ -39,5 +53,7 @@ public enum UIGroup
     initial,
     loading,
     mainMenu,
-    baseGame
+    baseGame,
+    credits,
+    achievements
 }

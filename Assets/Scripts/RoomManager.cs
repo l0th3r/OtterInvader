@@ -82,6 +82,13 @@ public class RoomManager : MonoBehaviour
         int rnd = new System.Random().Next(0, spawnPoints.Length - 1);
         return spawnPoints[rnd];
     }
+
+    private class PlayerData
+    {
+        public int shots = 0;
+        public int kills = 0;
+        public Vector2 startPosition;
+    }
 }
 
 public class Round
@@ -92,7 +99,6 @@ public class Round
 
     private readonly int multiplier = 1;
     public int spawnedEnemies = 0;
-
     private float lastSpawnTime;
 
     public Round(int _multiplier, RoundSettings _settings)
@@ -130,14 +136,6 @@ public class Round
         lastSpawnTime = GetTime();
     }
 
-    public void StreamPlayerPosition(Vector2 pos)
-    {
-        foreach(CerealManager cm in cereals)
-        {
-            cm.targetPosition = pos;
-        }
-    }
-
     private void Die(CerealManager cereal)
     {
         cereals.Remove(cereal);
@@ -152,6 +150,15 @@ public class Round
     public float GetTime()
     {
         return Time.time - startTime;
+    }
+
+    // player data
+    public void StreamPlayerPosition(Vector2 pos)
+    {
+        foreach (CerealManager cm in cereals)
+        {
+            cm.targetPosition = pos;
+        }
     }
 }
 
