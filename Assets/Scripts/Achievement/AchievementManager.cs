@@ -13,7 +13,7 @@ public class AchievementManager : MonoBehaviour
     [SerializeField] private AchievementData[] achievements;
     private Dictionary<AchievementData, bool> achievementDico;
 
-    private void Awake()
+    public void Init()
     {
         instance = this;
         achievementDico = new Dictionary<AchievementData, bool>();

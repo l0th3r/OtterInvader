@@ -11,6 +11,9 @@ public class AchievementsUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if (AchievementManager.instance == null)
+            return;
+
         foreach (Transform child in contentParent)
         {
             Destroy(child.gameObject);

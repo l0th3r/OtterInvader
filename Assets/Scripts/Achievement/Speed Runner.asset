@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Speed Runner
   m_EditorClassIdentifier: 
   displayName: Speed Runner
-  description: Complete a round in less than 1.45 minutes
+  description: Complete a round in less than 45 seconds

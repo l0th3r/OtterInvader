@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -20,6 +20,10 @@ public class WeaponManager : MonoBehaviour
     private bool canReload = true;
     private int currentMagazine;
 
+    // events
+    public Action ShootEvent;
+    public Action<bool> ReloadEvent; // true if mag is full
+
     private void Start()
     {
         currentMagazine = magazineSize;
@@ -28,7 +32,7 @@ public class WeaponManager : MonoBehaviour
 
     public void Update()
     {
-        if (currentMagazine > 0 && canShoot && isShootInput)
+        if (currentMagazine > 0 && canShoot && isShootInput && canonPos != null && shellEjectionPos != null)
             StartCoroutine(FireAction());
     }
 
@@ -40,6 +44,9 @@ public class WeaponManager : MonoBehaviour
         bullet.GetComponent<PropController>().Event();
         shell.GetComponent<PropController>().Event();
 
+        if (ShootEvent != null)
+            ShootEvent.Invoke();
+
         currentMagazine--;
         UpdateUI();
     }
@@ -47,6 +54,9 @@ public class WeaponManager : MonoBehaviour
     {
         if (!canReload)
             return;
+
+        if (ReloadEvent != null)
+            ReloadEvent.Invoke(currentMagazine == magazineSize);
 
         canReload = false;
         currentMagazine = 0;

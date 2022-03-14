@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: _initial
   strId: _initial
-  Id: -1
+  Id: 0
   path: Assets/Scenes/_initial.unity
   uiGroup: 1

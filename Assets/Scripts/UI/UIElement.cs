@@ -26,6 +26,10 @@ public class UIElement : MonoBehaviour
             MainMenuEvent.Invoke();
     }
 
+    public void PressStart()
+    {
+        AchievementManager.instance.Unlock("Noob");
+    }
 
     public void GoToLevel(int id)
     {

@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Thrifty
   m_EditorClassIdentifier: 
   displayName: Thrifty
-  description: Finish a round in less than 5 magazines
-  id: 3
+  description: Finish a round without reloading

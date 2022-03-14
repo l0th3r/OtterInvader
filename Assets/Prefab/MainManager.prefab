@@ -412,7 +412,6 @@ GameObject:
   - component: {fileID: 2905781199854445156}
   - component: {fileID: 7805936567643852702}
   - component: {fileID: 1032546422736892101}
-  - component: {fileID: 7156844118352677488}
   - component: {fileID: 2143355595}
   m_Layer: 0
   m_Name: MainManager
@@ -465,31 +464,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6cc3c0f33fdf58e489e294d4c3f54680, type: 2}
   - {fileID: 11400000, guid: e48f9ad43e38aea47a696c3b8e16067a, type: 2}
   secondsBetweenLoadingCheck: 1
---- !u!114 &7156844118352677488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2905781199854445159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 924142330d33f5740be423b3af63a426, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pools:
-  - id: Shell
-    prefab: {fileID: 2700581956936105306, guid: edbe92ef1c001c642a296a6a9c8862c5, type: 3}
-    capacity: 2000
-  - id: Bullet
-    prefab: {fileID: 2700581956936105306, guid: 45a6ca15d7637124c94abcd62b957218, type: 3}
-    capacity: 30
-  - id: Mag
-    prefab: {fileID: 2700581956936105306, guid: 1a8ce415bf914f94e808692fc376ad93, type: 3}
-    capacity: 1000
-  - id: Cereal
-    prefab: {fileID: 8321060096792648395, guid: 7d0b852525069934eb027e132f4a0e91, type: 3}
-    capacity: 1500
 --- !u!114 &2143355595
 MonoBehaviour:
   m_ObjectHideFlags: 0

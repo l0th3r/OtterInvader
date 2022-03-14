@@ -8,12 +8,11 @@ public class RoomManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] spawnPoints;
     [SerializeField] private GameObject playerPrefab;
-    private PlayerController player;
 
-    // Round Format
+    // Round settings
     [SerializeField] private RoundSettings settings;
 
-    // Current round format
+    // Current round
     private Coroutine roundFlow;
     public Round currentRound;
     private int roundCount = 1;
@@ -28,15 +27,28 @@ public class RoomManager : MonoBehaviour
         Pooler.instance.InitPools();
 
         var newPlayer = Instantiate(playerPrefab, Vector2.zero, Quaternion.identity);
-        player = newPlayer.GetComponent<PlayerController>();
+        var weapon = newPlayer.GetComponent<WeaponManager>();
+        var player = newPlayer.GetComponent<PlayerController>();
+        
+        // set events
         player.positionChangeEvent = UpdatePlayerPosition;
+        player.DieEvent = PlayerDieEvent;
+        weapon.ShootEvent = PlayerShootEvent;
+        weapon.ReloadEvent = PlayerRealoadEvent;
 
         StartRound();
     }
 
+    #region Round
     public void StartRound()
     {
         currentRound = new Round(roundCount, settings);
+
+        if (roundCount == 5)
+            AchievementManager.instance.Unlock("Survivor");
+        if (roundCount == 10)
+            AchievementManager.instance.Unlock("Bear Grylls");
+
         roundFlow = StartCoroutine(RoundFlow());
         UpdateRoomUI();
     }
@@ -49,14 +61,68 @@ public class RoomManager : MonoBehaviour
                 currentRound.SpawnCereal(GetRandomSpawner());
 
             UpdateRoomUI();
+            CheckRoundProgress();
 
             yield return null;
         }
 
         UpdateRoomUI();
+        CheckRoundEnd();
+        
         yield return new WaitForSeconds(settings.newRoundDelay);
         roundCount++;
         StartRound();
+    }
+
+    private void CheckRoundProgress()
+    {
+        if (currentRound.GetTime() >= 30 && currentRound.data.shots == 0)
+            AchievementManager.instance.Unlock("Dodge Master");
+    }
+
+    private void CheckRoundEnd()
+    {
+        if(currentRound.GetTime() <= 45)
+            AchievementManager.instance.Unlock("Speed Runner");
+
+        if(currentRound.data.reloads == 0)
+            AchievementManager.instance.Unlock("Thrifty");
+    }
+    #endregion
+
+    #region Player Events
+    private void UpdatePlayerPosition(Vector2 pos)
+    {
+        if(currentRound != null)
+        {
+            currentRound.StreamPlayerPosition(pos);
+        }
+    }
+    private void PlayerShootEvent()
+    {
+        currentRound.data.shots++;
+        PlayerDataManager.ShotEvent();
+    }
+    private void PlayerRealoadEvent(bool isMagFull)
+    {
+        currentRound.data.reloads++;
+        PlayerDataManager.ReloadEvent();
+
+        if (isMagFull)
+            AchievementManager.instance.Unlock("Waste");
+    }
+    private void PlayerDieEvent()
+    {
+        StopCoroutine(roundFlow);
+        PlayerDataManager.DeathEvent();
+        StartCoroutine(Tools.DelayAction(3f, () => FindObjectOfType<GameManager>().ChangeLevel(0)));
+    }
+    #endregion
+
+    private GameObject GetRandomSpawner()
+    {
+        int rnd = new System.Random().Next(0, spawnPoints.Length - 1);
+        return spawnPoints[rnd];
     }
 
     private void UpdateRoomUI()
@@ -68,27 +134,6 @@ public class RoomManager : MonoBehaviour
 
         enemiesLeftUI.text = currentRound.GetEnemiesCount().ToString();
     }
-
-    private void UpdatePlayerPosition(Vector2 pos)
-    {
-        if(currentRound != null)
-        {
-            currentRound.StreamPlayerPosition(pos);
-        }
-    }
-
-    private GameObject GetRandomSpawner()
-    {
-        int rnd = new System.Random().Next(0, spawnPoints.Length - 1);
-        return spawnPoints[rnd];
-    }
-
-    private class PlayerData
-    {
-        public int shots = 0;
-        public int kills = 0;
-        public Vector2 startPosition;
-    }
 }
 
 public class Round
@@ -96,6 +141,7 @@ public class Round
     public float startTime;
     private List<CerealManager> cereals;
     private RoundSettings settings;
+    public PlayerData data;
 
     private readonly int multiplier = 1;
     public int spawnedEnemies = 0;
@@ -105,6 +151,7 @@ public class Round
     {
         startTime = Time.time;
         cereals = new List<CerealManager>();
+        data = new PlayerData();
 
         multiplier = _multiplier;
         settings = _settings;
@@ -138,6 +185,9 @@ public class Round
 
     private void Die(CerealManager cereal)
     {
+        this.data.kills++;
+        PlayerDataManager.KillEvent();
+
         cereals.Remove(cereal);
         cereal.gameObject.SetActive(false);
     }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4b0d520c921aa43bc2ae26e2d92aee, type: 3}
   m_Name: Undecided
   m_EditorClassIdentifier: 
-  displayName: 'Undecided '
-  description: Wait 3 minutes in main menu
+  displayName: Undecided
+  description: Wait 1 minutes in main menu

@@ -12,12 +12,15 @@ public class PlayerController : MonoBehaviour
 
     // Conditions
     private bool canMove = true;
+    private bool isDead = false;
 
     // values
     private Vector2 currentMovement = Vector2.zero;
     private Vector2 aimDirection = Vector2.zero;
 
+    // Events
     public Action<Vector2> positionChangeEvent;
+    public Action DieEvent;
 
     private void Awake()
     {
@@ -46,7 +49,7 @@ public class PlayerController : MonoBehaviour
     {
         if(canMove)
         {
-            // Movement
+            // Movement (4f is speed)
             this.transform.position += 4f * Time.fixedDeltaTime * (Vector3)currentMovement;
 
             // Rotation
@@ -81,6 +84,19 @@ public class PlayerController : MonoBehaviour
     private void OnReload(InputAction.CallbackContext ctx)
     {
         weapon.Reload();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isDead && collision.gameObject.CompareTag("Cereal"))
+        {
+            if (DieEvent != null)
+                DieEvent.Invoke();
+
+            canMove = false;
+            isDead = true;
+            Destroy(model);
+        }
     }
 
     private void OnEnable()

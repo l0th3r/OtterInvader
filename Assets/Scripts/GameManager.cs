@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         uiManager.Initialize();
         uiManager.SetGroupActions(GoToMainMenu, ChangeLevel, GoToCredits, GoToAchievements);
 
+        GetComponent<AchievementManager>().Init();
         AchievementManager.instance.SetUIManager(uiManager);
 
         if (levelManager.GetActiveScene().name == "_initial")
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region Level Manager
-    private void ChangeLevel(uint level)
+    public void ChangeLevel(uint level)
     {
         this.State = GameState.loading;
         levelManager.StartLoadLevel(level, ChangeLevelDone);
@@ -78,8 +79,15 @@ public class GameManager : MonoBehaviour
     public IEnumerator SetupLevel()
     {
         yield return null;
-        FindObjectOfType<RoomManager>().Load();
-        this.State = GameState.waitingInput;
+        var rm = FindObjectOfType<RoomManager>();
+
+        if (rm != null)
+        {
+            rm.Load();
+            this.State = GameState.waitingInput;
+        }
+        else
+            this.State = GameState.mainMenu;
     }
     private void ChangeLevelDone()
     {
@@ -93,6 +101,7 @@ public class GameManager : MonoBehaviour
     public void GoToCredits()
     {
         this.State = GameState.credits;
+        AchievementManager.instance.Unlock("Thank you :)");
     }
     public void GoToAchievements()
     {
@@ -116,7 +125,6 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.credits:
                 uiManager.DisplayGroup(UIGroup.credits);
-                AchievementManager.instance.Unlock("Thank you :)");
                 break;
             case GameState.achievements:
                 uiManager.DisplayGroup(UIGroup.achievements);
